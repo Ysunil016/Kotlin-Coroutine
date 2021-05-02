@@ -1,18 +1,16 @@
 package thoughtworks
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.util.concurrent.Executors
 import kotlin.system.measureTimeMillis
 
 fun main() {
     runBlocking(Dispatchers.Default) {
         val timeTaken = measureTimeMillis {
-            val getAllIds = "http://localhost:8080/coroutine/getListOfElements/500"
+            val getAllIds = "http://localhost:8080/coroutine/getListOfElements/10"
             val getDetailFromId = "http://localhost:8080/coroutine/detail"
 
 // By Default Dispatchers.IO, has 64 Thread Pool Size
@@ -30,12 +28,13 @@ fun main() {
                         val job = async(Dispatchers.IO) {
                             makeApiRequest("$getDetailFromId/$it")
                         }
-                        allDetailsValues.add(job.await() ?: "Nothing")
-                        println(System.currentTimeMillis())
+                        val value = job.await() ?: "Nothing"
+                        allDetailsValues.add(value)
+                        println("Adding Value $value")
                     }
                 }
             }
-            println(allDetailsValues.size)
+            println(allDetailsValues)
         }
         println("Time Taken $timeTaken ms")
     }
