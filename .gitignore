@@ -1,0 +1,42 @@
+.gradle
+build
+!gradle/wrapper/gradle-wrapper.jar
+out
+build-cache
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+*.patch
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### Front End ###
+node_modules/
+yarn.lock
+npm-debug.log
+
+.DS_Store
+classes
+
+### Redis ###
+redis
+
+
+build.zip
