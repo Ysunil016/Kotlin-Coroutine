@@ -1,4 +1,4 @@
-package com.tservice.controller.vaccine.dao
+package com.tservice.controller.cowin.dao
 
 class CowinSession(
     val date: String,

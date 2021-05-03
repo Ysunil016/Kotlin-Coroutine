@@ -1,9 +1,9 @@
-package com.tservice.controller.vaccine.service
+package com.tservice.controller.cowin.service
 
-import com.tservice.controller.vaccine.client.CowinClient
-import com.tservice.controller.vaccine.dao.CowinResponse
-import com.tservice.controller.vaccine.dao.CowinSession
-import com.tservice.controller.vaccine.dao.Hospital
+import com.tservice.controller.cowin.client.CowinClient
+import com.tservice.controller.cowin.dao.CowinResponse
+import com.tservice.controller.cowin.dao.CowinSession
+import com.tservice.controller.cowin.dao.Hospital
 import org.springframework.stereotype.Service
 import java.text.SimpleDateFormat
 import java.util.*

@@ -1,4 +1,4 @@
-package com.tservice.controller.vaccine.dao
+package com.tservice.controller.cowin.dao
 
 data class Hospital(
     val name:String,

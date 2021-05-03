@@ -1,4 +1,4 @@
-package com.tservice.controller.vaccine.config
+package com.tservice.controller.cowin.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

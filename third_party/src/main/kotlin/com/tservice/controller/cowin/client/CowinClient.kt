@@ -1,7 +1,7 @@
-package com.tservice.controller.vaccine.client
+package com.tservice.controller.cowin.client
 
-import com.tservice.controller.vaccine.COWIN_URL
-import com.tservice.controller.vaccine.dao.CowinResponse
+import com.tservice.controller.cowin.COWIN_URL
+import com.tservice.controller.cowin.dao.CowinResponse
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 

@@ -1,7 +1,7 @@
-package com.tservice.controller.vaccine
+package com.tservice.controller.cowin
 
-import com.tservice.controller.vaccine.dao.Hospital
-import com.tservice.controller.vaccine.service.CowinService
+import com.tservice.controller.cowin.dao.Hospital
+import com.tservice.controller.cowin.service.CowinService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
