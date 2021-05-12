@@ -38,7 +38,6 @@ class Home {
         Thread.sleep(5000)
         return id.substring(1, 6);
     }
-
 }
 
 
