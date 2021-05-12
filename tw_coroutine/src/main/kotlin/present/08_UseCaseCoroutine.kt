@@ -10,7 +10,7 @@ import kotlin.system.measureTimeMillis
 
 fun main() {
     val timeTaken = measureTimeMillis {
-        val getAllIds = "http://localhost:8080/coroutine/getListOfElements/100"
+        val getAllIds = "http://localhost:8080/coroutine/getListOfElements/10"
         val getDetailFromId = "http://localhost:8080/coroutine/detail"
 
         val allIdsResponse = makeApiRequest(getAllIds)
@@ -28,9 +28,9 @@ fun main() {
                         }
                         val value = job.await() ?: "Nothing"
 
-//                        withContext(mainContext){
+                        withContext(mainContext){
                             allDetailsValues.add(value)
-//                        }
+                        }
                     }
                 }
 
