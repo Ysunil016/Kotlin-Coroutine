@@ -15,7 +15,7 @@ fun mainW() {
 
     var valueCount = 0
     runBlocking {
-        for (i in 1 until 5000001) {
+        for (i in 1 until 500000) {
             launch(Dispatchers.Default) {
                 valueCount++
             }
@@ -26,13 +26,13 @@ fun mainW() {
     println("Main End on - ${Thread.currentThread().name}")
 }
 
-fun mainC() {
+fun mainV() {
     var valueCount = 0
     val list = mutableListOf<Int>()
     val timeTaken = measureTimeMillis {
         runBlocking {
             val mainContext = coroutineContext
-            for (i in 1 until 5000001) {
+            for (i in 1 until 500001) {
                 launch(Dispatchers.Default) {
                     withContext(mainContext) {
                         valueCount++
@@ -45,12 +45,12 @@ fun mainC() {
     println("Final Value = $valueCount & Size = ${list.size} with Time $timeTaken")
 }
 
-fun mainML() {
+fun mainX() {
     var valueCount = 0
     val timeTaken = measureTimeMillis {
         runBlocking {
             val mutexLock = Mutex()
-            for (i in 1 until 5000001) {
+            for (i in 1 until 500001) {
                 launch(Dispatchers.Default) {
                     mutexLock.lock()
                     valueCount++
@@ -62,13 +62,13 @@ fun mainML() {
     println("Final Value = $valueCount Time - $timeTaken")
 }
 
-fun mainM() {
+fun main() {
     var valueCount = 0
     var list = mutableListOf<Int>()
     val timeTaken = measureTimeMillis {
         runBlocking {
             val mutexLock = Mutex()
-            for (i in 1 until 5000001) {
+            for (i in 1 until 500001) {
                 launch(Dispatchers.Default) {
                     mutexLock.withLock {
                         valueCount++
