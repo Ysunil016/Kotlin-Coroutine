@@ -1,16 +1,24 @@
 package present
 
 import kotlin.concurrent.thread
+import kotlin.system.measureTimeMillis
 
-fun mainCallback() {
+fun main() {
     Thread.currentThread().name = "Main Thread"
 
-    println("Main Start Thead Name - ${Thread.currentThread().name}")
+    val timeTaken = measureTimeMillis {
+        println("Main Start Thead Name - ${Thread.currentThread().name}")
 
-    thread { fetchUser { saveUserToDatabase { emitSuccessMessage() } } }
-    thread { fetchUser { saveUserToDatabase { emitSuccessMessage() } } }
+        val threadA = thread { fetchUser { saveUserToDatabase { emitSuccessMessage() } } }
+        val threadB = thread { fetchUser { saveUserToDatabase { emitSuccessMessage() } } }
 
-    println("Main End Thead Name - ${Thread.currentThread().name}")
+        threadA.join()
+        threadB.join()
+
+        println("Main End Thead Name - ${Thread.currentThread().name}")
+    }
+
+    println("Time Taken - $timeTaken")
 }
 
 

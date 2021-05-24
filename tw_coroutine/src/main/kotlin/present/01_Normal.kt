@@ -1,28 +1,36 @@
 package present
 
-fun mainNormal() {
+import kotlin.system.measureTimeMillis
+
+fun main() {
     Thread.currentThread().name = "Main Thread"
 
-    println("Main Start on - ${Thread.currentThread().name}")
+    val timeTaken = measureTimeMillis {
 
-    emitMessageA()
-    emitMessageB()
-    emitMessageC()
+        println("Main Start on - ${Thread.currentThread().name}")
 
-    println("Main End on - ${Thread.currentThread().name}")
+        emitMessageA()
+        emitMessageB()
+        emitMessageC()
+
+        println("Main End on - ${Thread.currentThread().name}")
+
+    }
+
+    println("Time Taken $timeTaken")
 }
 
-private fun emitMessageA(){
+private fun emitMessageA() {
     Thread.sleep(2000)
     println("Function A on - ${Thread.currentThread().name}")
 }
 
-private fun emitMessageB(){
+private fun emitMessageB() {
     Thread.sleep(2000)
     println("Function B on - ${Thread.currentThread().name}")
 }
 
-private fun emitMessageC(){
+private fun emitMessageC() {
     Thread.sleep(2000)
     println("Function C on - ${Thread.currentThread().name}")
 }

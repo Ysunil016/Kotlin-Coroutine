@@ -1,8 +1,6 @@
 package present
 
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -13,11 +11,24 @@ import kotlinx.coroutines.withContext
 import kotlin.system.measureTimeMillis
 
 // Default Nature of Coroutine w.r.t its Scope
-fun mainDefault() {
+fun main() {
     Thread.currentThread().name = "Main Thread"
 
     println("Main Start on - ${Thread.currentThread().name}")
 
+//    basicCoroutineWithRunBlocking()
+//    coroutineWithDefaultDispatcher()
+//    coroutineWithinRunBlockingScope()
+//    coroutineWithReturnValue()
+//    dirtyReadAndWrite()
+//    temporaryFixForDirtyRead()
+//    recommendedFixForDirtyRead()
+
+
+    println("Main End on - ${Thread.currentThread().name}")
+}
+
+private fun basicCoroutineWithRunBlocking() {
     runBlocking {
 
         println("Started on ${Thread.currentThread().name}")
@@ -29,53 +40,38 @@ fun mainDefault() {
 
         println("Ended on ${Thread.currentThread().name}")
     }
-
-    println("Main End on - ${Thread.currentThread().name}")
 }
 
 
 //Coroutine with Definite Dispatcher Selection
-fun mainDispatcher() {
-    Thread.currentThread().name = "Main Thread"
-
-    println("Main Start on - ${Thread.currentThread().name}")
-
+fun coroutineWithDefaultDispatcher() {
     runBlocking(Dispatchers.Default) {
 
-        println("Start Coroutine routine on ${Thread.currentThread().name}")
+        println("Start Coroutine on ${Thread.currentThread().name}")
 
         for (i in 1 until 10) {
             println("Value on $i ${Thread.currentThread().name}")
             delay(400)
         }
 
-        println("End Global Coroutine on ${Thread.currentThread().name}")
+        println("End Coroutine on ${Thread.currentThread().name}")
     }
-
-    println("Main End on - ${Thread.currentThread().name}")
 }
 
 
 // Coroutine for Async Task - Launch (No Return)
-fun mainLaunch() {
-    Thread.currentThread().name = "Main Thread"
-
-    println("Main Start on - ${Thread.currentThread().name}")
-
+fun coroutineWithinRunBlockingScope() {
     runBlocking {
         println("Run Block Start on - ${Thread.currentThread().name}")
 
         for (i in 1 until 100) {
             launch(Dispatchers.Default) {
-                delay(5000)
+                delay(2000)
                 println("Value - $i -> Task on Launch - ${Thread.currentThread().name}")
             }
         }
-
         println("Run Block End on - ${Thread.currentThread().name}")
     }
-
-    println("Main End on - ${Thread.currentThread().name}")
 }
 
 
@@ -107,11 +103,7 @@ fun mainTimeTaken() {
 
 
 // Coroutine for Async Task - Async (Returning Function)
-fun mainAsync() {
-    Thread.currentThread().name = "Main Thread"
-
-    println("Main Start on - ${Thread.currentThread().name}")
-
+fun coroutineWithReturnValue() {
     val timeTaken = measureTimeMillis {
         runBlocking {
             println("Run Block Start on - ${Thread.currentThread().name}")
@@ -128,18 +120,11 @@ fun mainAsync() {
         }
     }
     println("Time Taken - $timeTaken")
-
-    println("Main End on - ${Thread.currentThread().name}")
-
-
 }
 
 
 // Coroutine leading Data Lost - Dirty Read and Write
-fun mainDataLost() {
-    Thread.currentThread().name = "Main Thread"
-
-    println("Main Start on - ${Thread.currentThread().name}")
+fun dirtyReadAndWrite() {
 
     val totalCount = 50001;
     val buffer = mutableListOf<Int>();
@@ -159,99 +144,66 @@ fun mainDataLost() {
 
         println("Run Block End on - ${Thread.currentThread().name}")
     }
-
     println("Buffer Size - Expected : ${totalCount - 1} - Actual : ${buffer.size} ")
-
-    println("Main End on - ${Thread.currentThread().name}")
-
 }
 
 
-// Resolve Coroutine leading Data Lost - Jugad Methodology (Not - Recommended)
-fun mainJugad() {
-    Thread.currentThread().name = "Main Thread"
-
-    println("Main Start on - ${Thread.currentThread().name}")
+// Resolve Coroutine leading Data Lost
+fun temporaryFixForDirtyRead() {
 
     val totalCount = 50001;
     val buffer = mutableListOf<Int>();
 
-    runBlocking {
-        val currentContext = coroutineContext
+    val timeTaken = measureTimeMillis {
 
-        println("Run Block Start on - ${Thread.currentThread().name}")
+        runBlocking {
+            val currentContext = coroutineContext
+            for (i in 1 until totalCount) {
 
+                launch(Dispatchers.Default) {
+                    delay(20)
 
-        for (i in 1 until totalCount) {
-
-            launch(Dispatchers.Default) {
-                delay(20)
-
-                withContext(currentContext) {
-                    buffer.add(i)
+                    withContext(currentContext) {
+                        buffer.add(i)
+                    }
                 }
+
             }
-
         }
-
-        println("Run Block End on - ${Thread.currentThread().name}")
     }
+    println("Time Taken $timeTaken")
 
     println("Buffer Size - Expected : ${totalCount - 1} - Actual : ${buffer.size} ")
-
-    println("Main End on - ${Thread.currentThread().name}")
-
 }
 
 
 // Resolve Coroutine leading Data Lost - Mutex Lock
-fun mainMutex() {
-    Thread.currentThread().name = "Main Thread"
+fun recommendedFixForDirtyRead() {
 
-    println("Main Start on - ${Thread.currentThread().name}")
-
-    val totalCount = 500001;
+    val totalCount = 50001;
     val buffer = mutableListOf<Int>();
 
-    runBlocking {
-        val mutex = Mutex()
+    val timeTaken = measureTimeMillis {
 
-        println("Run Block Start on - ${Thread.currentThread().name}")
+        runBlocking {
+            val mutex = Mutex()
 
+            for (i in 1 until totalCount) {
 
-        for (i in 1 until totalCount) {
+                launch(Dispatchers.Default) {
+                    delay(20)
 
-            launch(Dispatchers.Default) {
-                delay(20)
-
-                mutex.withLock {
-                    buffer.add(i)
+                    mutex.withLock {
+                        buffer.add(i)
+                    }
                 }
+
             }
-
         }
-
-        println("Run Block End on - ${Thread.currentThread().name}")
     }
 
+    println("Time Taken $timeTaken")
     println("Buffer Size - Expected : ${totalCount - 1} - Actual : ${buffer.size} ")
-
-    println("Main End on - ${Thread.currentThread().name}")
-
-}
-
-
-// Exception Handling in Coroutine
-fun mainException() {
-    runBlocking {
-        val handleException =
-            CoroutineExceptionHandler { _, throwable -> println("Handler " + throwable.localizedMessage) }
-
-        val job = GlobalScope.launch(handleException) {
-            throw RuntimeException("Exception Message")
-        }
-        job.join()
-    }
 }
 
 

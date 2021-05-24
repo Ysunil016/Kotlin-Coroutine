@@ -7,12 +7,20 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 // Fire and Forget
-fun mainOne() {
+fun main() {
     Thread.currentThread().name = "Main Thread"
 
     println("Main Start on - ${Thread.currentThread().name}")
 
-    // Coroutine Builder
+//    fireAndForget()
+//    fireAndForgetWithSleep()
+//    waitForCoroutineCompletion()
+
+    println("Main End on - ${Thread.currentThread().name}")
+}
+
+
+private fun fireAndForget() {
     GlobalScope.launch {
 
         println("Start Global Coroutine routine on ${Thread.currentThread().name}")
@@ -24,16 +32,10 @@ fun mainOne() {
 
         println("End Global Coroutine on ${Thread.currentThread().name}")
     }
-
-    println("Main End on - ${Thread.currentThread().name}")
 }
 
 // Sleep to Observe.
-fun mainTwo() {
-    Thread.currentThread().name = "Main Thread"
-
-    println("Main Start on - ${Thread.currentThread().name}")
-
+fun fireAndForgetWithSleep() {
     GlobalScope.launch {
 
         println("Start Global Coroutine routine on ${Thread.currentThread().name}")
@@ -47,16 +49,10 @@ fun mainTwo() {
     }
 
     Thread.sleep(50)
-
-    println("Main End on - ${Thread.currentThread().name}")
 }
 
 // Proper Wait for Coroutine to Finish
-fun mainThree() = runBlocking {
-    Thread.currentThread().name = "Main Thread"
-
-    println("Main Start on - ${Thread.currentThread().name}")
-
+fun waitForCoroutineCompletion() = runBlocking {
     val job: Job = GlobalScope.launch {
 
         println("Start Global Coroutine routine on ${Thread.currentThread().name}")
@@ -71,6 +67,4 @@ fun mainThree() = runBlocking {
     }
 
     job.join()
-
-    println("Main End on - ${Thread.currentThread().name}")
 }

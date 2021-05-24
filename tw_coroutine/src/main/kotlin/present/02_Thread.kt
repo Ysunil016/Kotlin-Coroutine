@@ -2,7 +2,7 @@ package present
 
 import kotlin.concurrent.thread
 
-fun mainThread() {
+fun main() {
     Thread.currentThread().name = "Main Thread"
 
     println("Main Start Thead Name - ${Thread.currentThread().name}")
