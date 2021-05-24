@@ -75,7 +75,3 @@ private fun coroutineExecution() {
 private fun parseIdFromResponse(allIdsResponse: String?): List<String>? {
     return allIdsResponse?.substring(1, allIdsResponse.length - 1)?.split(",")
 }
-
-
-
-//## Use - Case

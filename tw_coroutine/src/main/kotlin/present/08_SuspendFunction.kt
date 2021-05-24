@@ -36,3 +36,4 @@ suspend fun fetchUserDelay() {
 
 //## Use - Case
 
+// They can execute a long running operation and wait for it to complete without blocking.

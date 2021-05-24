@@ -73,14 +73,12 @@ fun waitForCoroutineCompletion() = runBlocking {
 //## Use - Case
 
 /**
- *      SpringBoot Application,
- *      has a controller that triggers an event for dumping data into database by making multiple network calls.
- *      and returns nothing to client.
+ *      Background job, that dumps data by making multiple network calls.
+ *      and returns nothing.
  *
- *      ** Let's say Task Takes - 40 Mins.
+ *      ** Let's say Task took - 40 Mins.
  *
- *      ** Client and Server has open connection for 40 Mins,
- *      in this case we can use GlobalScope.launch { }. -> Fire and Forget.
+ *      In this case we can use GlobalScope.launch { }. -> Fire and Forget.
  *
  *      ** GlobalScope, Lives to Entire the Application's Life.
  */
