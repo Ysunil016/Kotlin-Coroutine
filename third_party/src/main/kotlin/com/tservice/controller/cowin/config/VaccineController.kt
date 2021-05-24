@@ -19,7 +19,7 @@ class VaccineController(
         @PathVariable pin_code: String?,
         @RequestParam ageLimit: Int?
     ): List<Hospital> {
-        return cowinService.getValue(pin_code ?: "248001", ageLimit ?: 18)
+        return cowinService.getValue(pin_code ?: "410210", ageLimit ?: 18)
     }
 
 }
