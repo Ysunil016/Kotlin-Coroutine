@@ -35,7 +35,7 @@ class Home {
 
     @GetMapping("/detail/{id}")
     fun getDetail(@PathVariable id: String): String {
-        Thread.sleep(5000)
+        Thread.sleep(2000)
         return id.substring(1, 6);
     }
 }

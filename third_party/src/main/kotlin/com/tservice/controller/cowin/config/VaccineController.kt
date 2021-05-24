@@ -1,4 +1,4 @@
-package com.tservice.controller.cowin
+package com.tservice.controller.cowin.config
 
 import com.tservice.controller.cowin.dao.Hospital
 import com.tservice.controller.cowin.service.CowinService

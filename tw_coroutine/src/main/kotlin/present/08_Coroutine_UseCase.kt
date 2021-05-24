@@ -44,11 +44,13 @@ fun mainCoroutineExecution() {
             val mutex = Mutex()
 
             allIds?.forEach {
-                launch(Dispatchers.Default) {
+                launch(Dispatchers.IO) {
                     val job = async(Dispatchers.IO) {
                         makeApiRequest("$getDetailFromId/$it")
                     }
+
                     val value = job.await() ?: "Nothing"
+                    println("Adding Value $value")
 
                     mutex.withLock {
                         allDetailsValues.add(value)
