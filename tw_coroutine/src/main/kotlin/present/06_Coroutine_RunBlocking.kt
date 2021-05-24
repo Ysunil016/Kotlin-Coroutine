@@ -208,3 +208,22 @@ fun recommendedFixForDirtyRead() {
 
 
 //## Use - Case
+
+/**
+ *      SpringBoot Application,
+ *      we know you have to call 5 network calls and 3 IO calls,
+ *      and then aggregate received data to make a response.
+ *
+ *      ** Let's say Network Call Takes - 10 Sec.
+ *      ** Let's say IO Call Takes - 5 Sec.
+ *
+ *      ** In this Case client has to wait for, 10*5 + 5*3 = 65 Sec.
+ *
+ *      In this case we can leverage the coroutine, async builder, and can perform concurrent calls
+ *      at Best, this client will have to wait for 10 + 5 + C = 15 Sec.
+ *
+ *      In order to aggregate, if you are using same shared buffer to store response from calls,
+ *      then use Mutex to lock Critical Section.
+ *
+ *      ** Run Blocking, is Blocking Coroutine, hence it waits for all its internal coroutines to finish.
+ */
