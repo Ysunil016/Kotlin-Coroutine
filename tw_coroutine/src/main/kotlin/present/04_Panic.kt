@@ -2,19 +2,20 @@ package present
 
 import kotlin.concurrent.thread
 
-fun main() {
+
+fun mainPanic() {
     Thread.currentThread().name = "Main Thread"
 
     println("Main Start Thead Name - ${Thread.currentThread().name}")
 
-    for (i in 1 until 5000) {
-        thread { functionA(i) }
+    for (id in 1 until 5000) {
+        thread { fetchDetails(id) }
     }
 
     println("Main End Thead Name - ${Thread.currentThread().name}")
 }
 
-private fun functionA(input: Int) {
+private fun fetchDetails(id: Int) {
     Thread.sleep(5000)
-    println("Value $input on - ${Thread.currentThread().name}")
+    println("Detail for $id on - ${Thread.currentThread().name}")
 }
