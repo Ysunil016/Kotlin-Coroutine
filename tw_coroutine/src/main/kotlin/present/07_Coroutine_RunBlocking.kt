@@ -24,7 +24,6 @@ fun main() {
 //    temporaryFixForDirtyRead()
 //    recommendedFixForDirtyRead()
 
-
     println("Main End on - ${Thread.currentThread().name}")
 }
 
